@@ -1,4 +1,4 @@
-# @haibala/dsh-wallpaperskin
+# @haibala-aii/dsh-wallpaperskin
 
 DeepSeek Harness (DSH) 壁纸皮肤插件 —— **静态图片版 MVP**。
 
@@ -12,7 +12,7 @@ DeepSeek Harness (DSH) 壁纸皮肤插件 —— **静态图片版 MVP**。
 ## 安装
 
 ```powershell
-dsh plugin --profile web add @haibala/dsh-wallpaperskin
+dsh plugin --profile web add @haibala-aii/dsh-wallpaperskin
 # 或从 GitHub 安装
 dsh plugin --profile web add github:haibala-aii/dsh-extensions-wallpaperskin
 ```
@@ -22,7 +22,7 @@ dsh plugin --profile web add github:haibala-aii/dsh-extensions-wallpaperskin
 ## 插件标识
 
 - 行 id：`wallpaperskin`
-- 包名：`@haibala/dsh-wallpaperskin`
+- 包名：`@haibala-aii/dsh-wallpaperskin`
 - Host 路由前缀：`/plugins/wallpaperskin`
 - 设置页槽位：`settings.section`（id: `wallpaperskin`）
 
