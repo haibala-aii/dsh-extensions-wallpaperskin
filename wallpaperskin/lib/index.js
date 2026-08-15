@@ -1,5 +1,5 @@
 /**
- * @haibala/dsh-wallpaperskin — Node half (Host 半区).
+ * @haibala-aii/dsh-wallpaperskin — Node half (Host 半区).
  *
  * 静态图片版：
  *  - 自动发现本地 Steam / Wallpaper Engine 壁纸库
