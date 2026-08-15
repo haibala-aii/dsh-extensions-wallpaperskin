@@ -1,5 +1,5 @@
 {
-  "name": "@haibala/dsh-wallpaperskin",
+  "name": "@haibala-aii/dsh-wallpaperskin",
   "version": "0.1.0",
   "description": "DSH 壁纸皮肤插件：为 DeepSeek Harness 提供自定义壁纸与皮肤设置。",
   "type": "module",
