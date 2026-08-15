@@ -1,5 +1,5 @@
 /**
- * @haibala/dsh-wallpaperskin — Browser half (Client 半区).
+ * @haibala-aii/dsh-wallpaperskin — Browser half (Client 半区).
  *
  * 静态图片版：
  *  - 在 DSH 设置中注册“壁纸皮肤”独立界面
