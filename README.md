@@ -10,7 +10,7 @@ DeepSeek Harness (DSH) 壁纸皮肤插件。
 ```
 dsh-extensions-wallpaperskin/
 ├── wallpaperskin/          # 可安装插件包
-│   ├── package.json        # @haibala/dsh-wallpaperskin
+│   ├── package.json        # @haibala-aii/dsh-wallpaperskin
 │   ├── cordis.patch.yml    # DSH bundle patch（插件行 id: wallpaperskin）
 │   ├── lib/index.js        # Host 半区：WE 壁纸库扫描 / 图片服务 / 配置
 │   ├── lib/client.js       # Client 半区：壁纸选择界面 + 背景应用
