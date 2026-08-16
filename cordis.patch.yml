@@ -1,0 +1,8 @@
+# One package: the dual-face wallpaper-skin plugin. Install it into a dsh
+# profile (`dsh plugin --profile <name> add link:...`) — the patch layer
+# below inserts the single plugin row. The browser half is discovered from
+# `dsh.client` and served from this package's lib/client.js.
+
+- insert:
+    - id: wallpaperskin
+      name: '@haibala-aii/dsh-extensions-wallpaperskin'
