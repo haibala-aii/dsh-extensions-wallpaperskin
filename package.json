@@ -1,7 +1,7 @@
 {
   "name": "@haibala-aii/dsh-extensions-wallpaperskin",
-  "description": "Haibala wallpaper skin for the DeepSeek Harness web GUI: pick a static Wallpaper Engine image as the app background",
-  "version": "0.2.0",
+  "description": "Use local Wallpaper Engine images, videos, and scene textures as the DeepSeek Harness web background",
+  "version": "0.3.0",
   "type": "module",
   "engines": {
     "node": "^22.19.0 || >=24.0.0"
@@ -13,7 +13,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "check": "node --check lib/index.js && node --check lib/client.js"
+    "check": "node --check lib/index.js && node --check lib/client.js && node --check lib/scene-package.js && node --test"
   },
   "files": [
     "lib",

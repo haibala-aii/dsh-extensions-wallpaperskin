@@ -2,6 +2,16 @@
 
 This file records user-visible changes to `@haibala-aii/dsh-extensions-wallpaperskin`.
 
+## 0.3.0 - 2026-08-16
+
+- Use the original file for Wallpaper Engine image projects instead of the preview thumbnail.
+- Stream MP4, WebM, M4V, and MOV video projects with HTTP Range support and muted looping playback.
+- Read compatible `scene.pkg` archives and use their primary TEX texture as the DSH background.
+- Distinguish original images, videos, scene textures, and preview-only projects in the picker.
+- Keep preview images as a fallback when media playback or scene decoding is unavailable.
+- Reject unsafe project paths and malformed scene package entries.
+- Add focused scene package and texture decoder tests.
+
 ## 0.2.0 - 2026-08-16
 
 - Move the installable DSH plugin package to the repository root.

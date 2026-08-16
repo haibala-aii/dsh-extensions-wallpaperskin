@@ -2,20 +2,22 @@
 
 [English](README.md) | 中文
 
-这是一个用于 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) Web 界面的壁纸皮肤插件。它会读取本机 Wallpaper Engine 图片，在 **扩展 > 外部** 中提供壁纸选择弹窗，并通过可调透明底色让壁纸显示在 DSH 工作区后方。
+这是一个用于 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) Web 界面的壁纸皮肤插件。它会读取本机 Wallpaper Engine 媒体，在 **扩展 > 外部** 中提供壁纸选择弹窗，并通过可调透明底色让壁纸显示在 DSH 工作区后方。
 
 > [!IMPORTANT]
-> 当前版本只支持静态图片。视频、网页和 `scene.pkg` 场景壁纸在存在预览图时会使用预览静帧，不会在 DSH 内运行原始壁纸。
+> 图片项目使用原图，视频项目播放本机原始视频。兼容的 `scene.pkg` 项目会读取包内主纹理。Wallpaper Engine 粒子、SceneScript、骨骼动画、音频响应和网页壁纸暂不执行；不兼容项目保留预览图。
 
 ## 功能
 
 - 通过 `STEAM_PATH`、Steam 注册表项和常见安装目录发现 Windows 上的 Steam 库。
 - 扫描 Wallpaper Engine 创意工坊订阅内容和本地创建项目。
+- 使用浏览器原生能力静音循环播放 MP4、WebM、M4V 和 MOV。
+- 读取 PKGV 场景包，并解码 PNG、JPEG、BMP、原始 BGRA 和 RLE 压缩的 TEX 主纹理。
 - 从 **扩展 > 外部** 的 `extensions-wallpaperskin` 已安装项目打开，不占用设置页。
 - 用“本地库”和“Wallpaper Engine”两个 Tab 区分全部项目与创意工坊缓存。
 - 点击卡片和调整透明度只会暂存，按“应用壁纸”后才写入配置。
 - 关闭弹窗或按“恢复当前选择”会恢复已保存的壁纸和透明度。
-- 使用全窗口 `cover` 背景层，并让 DSH 主界面和侧边栏保持可读。
+- 把本机原图、视频或兼容场景媒体作为全窗口 `cover` 背景，并让 DSH 主界面和侧边栏保持可读。
 - 提供 `0-70%` 的界面底色透明度。默认值为 `36%`；侧边栏比主底色少透明 14 个百分点，避免导航文字难以辨认。
 - 壁纸文件保留在本机，只由本地 DSH Host 提供给浏览器界面。
 
@@ -56,7 +58,7 @@ dsh plugin --profile web add link:E:/path/to/dsh-extensions-wallpaperskin
 1. 打开 DSH，进入 **扩展 > 外部**。
 2. 点击 `@haibala-aii/dsh-extensions-wallpaperskin` 对应的 `extensions-wallpaperskin` 项目。
 3. “本地库”显示发现的全部项目；“Wallpaper Engine”显示已经同步到本机的创意工坊项目。需要更多壁纸时，可以通过弹窗中的入口打开 Steam 创意工坊。
-4. 点击一张壁纸卡片。此时只会预选，不会立即保存。
+4. 通过卡片标签区分“原图”“视频”“场景主纹理”和“仅预览”，然后点击一张壁纸。此时只会预选，不会立即保存。
 5. 调整“界面底色透明度”，实时观察壁纸透过 DSH 主底色的程度。
 6. 按“应用壁纸”，同时保存壁纸和透明度。
 
@@ -71,7 +73,9 @@ steamapps/workshop/content/431960
 steamapps/common/wallpaper_engine/projects/myprojects
 ```
 
-存在 `project.json` 时，扫描器会读取项目元数据。图片选择顺序为：项目声明的预览图、静态主文件、项目目录中的第一张受支持图片。支持 PNG、JPEG、GIF、WebP、BMP、SVG 和 AVIF。
+存在 `project.json` 时，扫描器会读取项目元数据。图片项目使用声明的原图；视频项目使用声明的视频，或项目目录中的第一个受支持视频；场景项目读取 `scene.pkg` 中的 `scene.json`、模型和材质元数据，以定位 TEX 主纹理。预览文件只用作缩略图和运行失败时的回退图。
+
+支持的图片扩展名为 PNG、JPEG、GIF、WebP、BMP、SVG 和 AVIF。支持的视频容器为 MP4、WebM、M4V 和 MOV；视频能否播放仍取决于浏览器支持的编码格式。
 
 “Wallpaper Engine”Tab 只展示已经下载到本机的创意工坊文件，插件不会自行下载创意工坊内容。请先在 Wallpaper Engine 中订阅或创建壁纸，等待同步完成，再在弹窗中按“扫描本地库”。
 
@@ -98,6 +102,7 @@ steamapps/common/wallpaper_engine/projects/myprojects
 | `GET` | `/plugins/wallpaperskin/list` | 重新扫描并返回壁纸、Steam 库根目录和已保存配置 |
 | `GET` | `/plugins/wallpaperskin/preview/<id>` | 返回壁纸缩略图 |
 | `GET` | `/plugins/wallpaperskin/image/<id>` | 返回选中的背景图 |
+| `GET` | `/plugins/wallpaperskin/media/<id>` | 返回原图、支持 Range 的视频流或解码后的场景纹理 |
 | `GET` | `/plugins/wallpaperskin/config` | 返回已保存配置 |
 | `POST` | `/plugins/wallpaperskin/config` | 合并并保存配置字段 |
 | `GET` | `/plugins/wallpaperskin/health` | 返回插件状态和渲染模式 |
@@ -108,16 +113,17 @@ steamapps/common/wallpaper_engine/projects/myprojects
 
 插件包包含两个运行部分：
 
-- `lib/index.js` 是 Host 插件，负责发现 Steam 库、扫描项目元数据、解析本地图片路径、提供 HTTP 接口并持久化配置。
-- `lib/client.js` 是浏览器插件，负责注册扩展弹层、渲染选择器、预览未保存的调整，以及设置背景层和 DSH 半透明主题变量。
+- `lib/index.js` 是 Host 插件，负责发现 Steam 库、选择项目原始媒体、提供视频 Range 响应和 HTTP 接口，并持久化配置。
+- `lib/scene-package.js` 负责校验 PKGV 目录、解析场景元数据，并在不写入磁盘的情况下解码最大尺寸 TEX 纹理。
+- `lib/client.js` 是浏览器插件，负责注册扩展弹层、渲染选择器、预览未保存的调整，以及设置图片或视频背景和 DSH 半透明主题变量。
 
 `cordis.patch.yml` 把 Host 插件插入指定 DSH profile；`package.json` 中的 `dsh.client` 字段负责注册浏览器 Client。
 
 ## 隐私与安全
 
-插件不会上传壁纸、发送遥测数据或请求远程壁纸 API。壁纸元数据和图片内容都留在本机，由本地 DSH Host 读取。唯一的外部跳转是用户主动点击的 Wallpaper Engine 公共创意工坊链接。
+插件不会上传壁纸、发送遥测数据或请求远程壁纸 API。壁纸元数据、包内纹理和视频内容都留在本机，由本地 DSH Host 读取。唯一的外部跳转是用户主动点击的 Wallpaper Engine 公共创意工坊链接。
 
-DSH 会把选中的图片提供给已连接的 Web Client。不要把未做访问控制的 DSH 实例暴露到不受信任的网络，因为能够访问插件路由的 Client 可以按 id 请求已发现的壁纸图片。
+DSH 会把选中的媒体提供给已连接的 Web Client。不要把未做访问控制的 DSH 实例暴露到不受信任的网络，因为能够访问插件路由的 Client 可以按 id 请求已发现的壁纸媒体。
 
 漏洞报告方式见 [SECURITY.md](SECURITY.md)。
 
